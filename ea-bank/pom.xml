@@ -9,5 +9,6 @@
 <modules>  <module>eabank-ear</module>
     <module>eabank-ejb</module>
     <module>eabank-ws</module>
-</modules>
+  <module>eabank-web</module>
+  </modules>
 </project>

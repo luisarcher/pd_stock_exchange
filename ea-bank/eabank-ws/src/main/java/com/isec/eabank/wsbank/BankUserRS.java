@@ -5,6 +5,9 @@
  */
 package com.isec.eabank.wsbank;
 
+import com.isec.bank.dto.DTOBankUser;
+import com.isec.eabank.facade.TUserFacade;
+import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -12,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -25,12 +29,20 @@ public class BankUserRS {
     @Context
     private UriInfo context;
 
+    @EJB
+    private TUserFacade facade;
     /**
      * Creates a new instance of BankUserRS
      */
     public BankUserRS() {
     }
 
+    @GET
+    @Path("/user/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public DTOBankUser getFlightById(@PathParam("id") int id) {
+        return facade.getUserById(id);
+    }
     /**
      * Retrieves representation of an instance of com.isec.eabank.wsbank.BankUserRS
      * @return an instance of com.isec.bank.dto.DTOBankUser
