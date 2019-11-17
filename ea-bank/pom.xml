@@ -9,6 +9,5 @@
 <modules>  <module>eabank-ear</module>
     <module>eabank-ejb</module>
     <module>eabank-ws</module>
-    <module>bank-DTO</module>
 </modules>
 </project>
