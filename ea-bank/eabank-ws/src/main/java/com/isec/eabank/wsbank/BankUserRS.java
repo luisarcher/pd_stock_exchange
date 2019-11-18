@@ -40,7 +40,7 @@ public class BankUserRS {
     @GET
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser getFlightById(@PathParam("id") int id) {
+    public DTOBankUser getUserById(@PathParam("id") int id) {
         return facade.getUserById(id);
     }
     /**
