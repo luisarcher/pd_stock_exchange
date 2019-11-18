@@ -46,6 +46,12 @@
             <artifactId>eabank-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.isec</groupId>
+                    <artifactId>bank-DTO</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

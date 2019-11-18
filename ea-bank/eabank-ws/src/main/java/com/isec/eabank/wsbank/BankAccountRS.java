@@ -5,9 +5,7 @@
  */
 package com.isec.eabank.wsbank;
 
-import com.isec.bank.dto.DTOBankUser;
-import com.isec.eabank.facade.TUserFacade;
-import javax.ejb.EJB;
+import com.isec.bank.dto.DTOBankAccount;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -15,7 +13,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -23,43 +20,35 @@ import javax.ws.rs.core.MediaType;
  *
  * @author ljordao
  */
-@Path("BankUserRS")
-public class BankUserRS {
+@Path("BankAccountRS")
+public class BankAccountRS {
 
     @Context
     private UriInfo context;
 
-    @EJB
-    private TUserFacade facade;
     /**
-     * Creates a new instance of BankUserRS
+     * Creates a new instance of BankAccountRS
      */
-    public BankUserRS() {
+    public BankAccountRS() {
     }
 
-    @GET
-    @Path("/user/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser getFlightById(@PathParam("id") int id) {
-        return facade.getUserById(id);
-    }
     /**
-     * Retrieves representation of an instance of com.isec.eabank.wsbank.BankUserRS
-     * @return an instance of com.isec.bank.dto.DTOBankUser
+     * Retrieves representation of an instance of com.isec.eabank.wsbank.BankAccountRS
+     * @return an instance of com.isec.bank.dto.DTOBankAccount
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public com.isec.bank.dto.DTOBankUser getJson() {
+    public DTOBankAccount getJson() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
 
     /**
-     * PUT method for updating or creating an instance of BankUserRS
+     * PUT method for updating or creating an instance of BankAccountRS
      * @param content representation for the resource
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(com.isec.bank.dto.DTOBankUser content) {
+    public void putJson(DTOBankAccount content) {
     }
 }
