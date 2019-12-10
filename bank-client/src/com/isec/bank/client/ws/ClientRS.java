@@ -25,7 +25,7 @@ public class ClientRS {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8080/eabank-ws/webresources";
+    private static final String BASE_URI = "http://172.1.0.97:8080/eabank-ws/webresources";
 
     public ClientRS() {
         client = javax.ws.rs.client.ClientBuilder.newClient();

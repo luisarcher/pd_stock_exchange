@@ -1,0 +1,8 @@
+# Build image
+docker build -t g01_img_db_stocks . 
+
+#run container
+#see "run_container"
+
+#get terminal instance
+docker exec -it --user postgresql g01_postgres_stocks bash

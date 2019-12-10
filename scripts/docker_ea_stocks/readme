@@ -1,0 +1,8 @@
+# Build image
+docker build -t g01_img_ea_stocks . 
+
+#run container
+#see "run_container"
+
+#get terminal instance
+docker exec -it --user payara g01_ea_stocks bash

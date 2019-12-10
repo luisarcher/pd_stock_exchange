@@ -1,0 +1,5 @@
+#!/bin/bash
+docker run --rm --name g01_payara_stocks -d \
+	-v /home/$USER/g01_docker/stocksdm:/opt/payara/deployments \
+	--net g01_netd --ip 172.1.0.96 \
+	g01_img_ea_stocks

@@ -29,6 +29,7 @@ public class Main {
         
         DTOBankUser obj = r.readEntity(new GenericType<DTOBankUser>(){});
         System.out.println(obj.getName());
+        System.out.println(obj.getNif());
         
         c.close();
         

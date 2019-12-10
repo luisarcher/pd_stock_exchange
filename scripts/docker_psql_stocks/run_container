@@ -1,0 +1,4 @@
+#!/bin/bash
+docker run --rm --name g01_postgres_stocks \
+	-d -v /home/$USER/g01_docker/pgstocks:/var/lib/postgresql/data \
+	--net g01_netd --ip 172.1.0.98 g01_img_db_stocks

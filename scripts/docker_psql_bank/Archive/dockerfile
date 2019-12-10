@@ -1,0 +1,22 @@
+FROM postgres
+
+# Setup configuration
+RUN mkdir /opt/scripts
+COPY crebas.sql /opt/scripts
+COPY db_init.sql /opt/scripts
+
+# Expose the PostgreSQL port
+EXPOSE 5432
+
+# Adjust PostgreSQL configuration so that remote connections to the
+# database are possible.
+RUN echo "host all  all    0.0.0.0/0  md5" >> /var/lib/postgresql/data/pg_hba.conf
+
+# And add ``listen_addresses`` to ``/var/lib/postgresql/data/postgresql.conf``
+RUN echo "listen_addresses='*'" >> /var/lib/postgresql/data/postgresql.conf
+
+USER postgres
+RUN /etc/init.d/postgresql start &&\
+    psql --command "CREATE USER pguser WITH PASSWORD 'pgpass';" && \
+    psql --command "CREATE DATABASE db_bank OWNER=pguser;" && \
+    psql -h localhost -d db_bank -U pguser -f /opt/scripts/crebas.sql -L bank_logfile.log
