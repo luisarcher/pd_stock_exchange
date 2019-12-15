@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTAccountTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateTAccountLabel_idAccount}" for="idAccount" />
+                    <h:inputText id="idAccount" value="#{tAccountController.selected.idAccount}" title="#{bundle.CreateTAccountTitle_idAccount}" required="true" requiredMessage="#{bundle.CreateTAccountRequiredMessage_idAccount}"/>
+                    <h:outputLabel value="#{bundle.CreateTAccountLabel_balance}" for="balance" />
+                    <h:inputText id="balance" value="#{tAccountController.selected.balance}" title="#{bundle.CreateTAccountTitle_balance}" />
+                    <h:outputLabel value="#{bundle.CreateTAccountLabel_idStatus}" for="idStatus" />
+                    <h:inputText id="idStatus" value="#{tAccountController.selected.idStatus}" title="#{bundle.CreateTAccountTitle_idStatus}" />
+                    <h:outputLabel value="#{bundle.CreateTAccountLabel_createdAt}" for="createdAt" />
+                    <h:inputText id="createdAt" value="#{tAccountController.selected.createdAt}" title="#{bundle.CreateTAccountTitle_createdAt}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateTAccountLabel_idUser}" for="idUser" />
+                    <h:selectOneMenu id="idUser" value="#{tAccountController.selected.idUser}" title="#{bundle.CreateTAccountTitle_idUser}" >
+                        <f:selectItems value="#{tUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tAccountController.create}" value="#{bundle.CreateTAccountSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tAccountController.prepareList}" value="#{bundle.CreateTAccountShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTAccountIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

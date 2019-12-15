@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTAccountTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTAccountLabel_idAccount}" for="idAccount" />
+                    <h:inputText id="idAccount" value="#{tAccountController.selected.idAccount}" title="#{bundle.EditTAccountTitle_idAccount}" required="true" requiredMessage="#{bundle.EditTAccountRequiredMessage_idAccount}"/>
+                    <h:outputLabel value="#{bundle.EditTAccountLabel_balance}" for="balance" />
+                    <h:inputText id="balance" value="#{tAccountController.selected.balance}" title="#{bundle.EditTAccountTitle_balance}" />
+                    <h:outputLabel value="#{bundle.EditTAccountLabel_idStatus}" for="idStatus" />
+                    <h:inputText id="idStatus" value="#{tAccountController.selected.idStatus}" title="#{bundle.EditTAccountTitle_idStatus}" />
+                    <h:outputLabel value="#{bundle.EditTAccountLabel_createdAt}" for="createdAt" />
+                    <h:inputText id="createdAt" value="#{tAccountController.selected.createdAt}" title="#{bundle.EditTAccountTitle_createdAt}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditTAccountLabel_idUser}" for="idUser" />
+                    <h:selectOneMenu id="idUser" value="#{tAccountController.selected.idUser}" title="#{bundle.EditTAccountTitle_idUser}" >
+                        <f:selectItems value="#{tUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{tAccountController.update}" value="#{bundle.EditTAccountSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTAccountViewLink}"/>
+                <br />
+                <h:commandLink action="#{tAccountController.prepareList}" value="#{bundle.EditTAccountShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTAccountIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

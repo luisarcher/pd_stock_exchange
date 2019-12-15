@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTMovementTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_idMovement}" for="idMovement" />
+                    <h:inputText id="idMovement" value="#{tMovementController.selected.idMovement}" title="#{bundle.EditTMovementTitle_idMovement}" required="true" requiredMessage="#{bundle.EditTMovementRequiredMessage_idMovement}"/>
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{tMovementController.selected.description}" title="#{bundle.EditTMovementTitle_description}" />
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_val}" for="val" />
+                    <h:inputText id="val" value="#{tMovementController.selected.val}" title="#{bundle.EditTMovementTitle_val}" />
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_finalBalance}" for="finalBalance" />
+                    <h:inputText id="finalBalance" value="#{tMovementController.selected.finalBalance}" title="#{bundle.EditTMovementTitle_finalBalance}" />
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_createdAt}" for="createdAt" />
+                    <h:inputText id="createdAt" value="#{tMovementController.selected.createdAt}" title="#{bundle.EditTMovementTitle_createdAt}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditTMovementLabel_idAccount}" for="idAccount" />
+                    <h:selectOneMenu id="idAccount" value="#{tMovementController.selected.idAccount}" title="#{bundle.EditTMovementTitle_idAccount}" >
+                        <f:selectItems value="#{tAccountController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{tMovementController.update}" value="#{bundle.EditTMovementSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTMovementViewLink}"/>
+                <br />
+                <h:commandLink action="#{tMovementController.prepareList}" value="#{bundle.EditTMovementShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTMovementIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

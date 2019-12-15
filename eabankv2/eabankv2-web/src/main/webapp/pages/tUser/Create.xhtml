@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_idUser}" for="idUser" />
+                    <h:inputText id="idUser" value="#{tUserController.selected.idUser}" title="#{bundle.CreateTUserTitle_idUser}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_username}" for="username" />
+                    <h:inputText id="username" value="#{tUserController.selected.username}" title="#{bundle.CreateTUserTitle_username}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_username}"/>
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_passwd}" for="passwd" />
+                    <h:inputText id="passwd" value="#{tUserController.selected.passwd}" title="#{bundle.CreateTUserTitle_passwd}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_passwd}"/>
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{tUserController.selected.name}" title="#{bundle.CreateTUserTitle_name}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_nif}" for="nif" />
+                    <h:inputText id="nif" value="#{tUserController.selected.nif}" title="#{bundle.CreateTUserTitle_nif}" />
+                    <h:outputLabel value="#{bundle.CreateTUserLabel_createdAt}" for="createdAt" />
+                    <h:inputText id="createdAt" value="#{tUserController.selected.createdAt}" title="#{bundle.CreateTUserTitle_createdAt}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tUserController.create}" value="#{bundle.CreateTUserSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tUserController.prepareList}" value="#{bundle.CreateTUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTUserIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
