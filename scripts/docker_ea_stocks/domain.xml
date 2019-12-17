@@ -55,7 +55,7 @@
       <property name="databaseName" value="db_stocks"></property>
       <property name="password" value="pgpass"></property>
       <property name="user" value="pguser"></property>
-      <property name="URL" value="jdbc:postgresql://172.1.0.99/db_stocks"></property>
+      <property name="URL" value="jdbc:postgresql://172.1.0.98/db_stocks"></property>
     </jdbc-connection-pool>
     <jdbc-resource pool-name="ConnPool-PD" jndi-name="jdbc/stocks"></jdbc-resource>
   </resources>
