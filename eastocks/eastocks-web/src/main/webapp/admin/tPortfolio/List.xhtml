@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListTPortfolioTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="TPortfolioListForm">
+                <p:panel header="#{bundle.ListTPortfolioTitle}">
+                    <p:dataTable id="datalist" value="#{tPortfolioController.items}" var="item"
+                                 selectionMode="single" selection="#{tPortfolioController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idPortfolio}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTPortfolioTitle_idPortfolio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idPortfolio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTPortfolioTitle_shareQuant}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shareQuant}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTPortfolioTitle_idCompany}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCompany}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTPortfolioTitle_idUser}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idUser}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{tPortfolioController.prepareCreate}" update=":TPortfolioCreateForm" oncomplete="PF('TPortfolioCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TPortfolioViewForm" oncomplete="PF('TPortfolioViewDialog').show()" disabled="#{empty tPortfolioController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TPortfolioEditForm" oncomplete="PF('TPortfolioEditDialog').show()" disabled="#{empty tPortfolioController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{tPortfolioController.destroy}" update=":growl,datalist" disabled="#{empty tPortfolioController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

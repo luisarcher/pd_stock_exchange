@@ -7,10 +7,12 @@ package com.isec.eabankv2.ws;
 
 import com.isec.bank.dto.DTOBankUser;
 import com.isec.facades.TUserFacade;
+import com.isec.manager.UserAccountManager;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
@@ -21,6 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -29,6 +32,7 @@ import javax.ws.rs.core.MediaType;
  * @author ljordao
  */
 @Path("BankUserRS")
+//@SessionScoped
 public class BankUserRS {
 
     @Context
@@ -37,26 +41,65 @@ public class BankUserRS {
     @EJB
     private TUserFacade facade;
     
+    @EJB
+    private UserAccountManager manager;
+    
+    //private DTOBankUser user;
+    
     
     /**
      * Creates a new instance of BankUserRS
      */
     public BankUserRS() {
         this.facade = lookupTUserFacadeBean();
+        this.manager = lookupUserAccountManagerBean();
     }
 
+    /* Só para efeitos de teste */
     @GET
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public DTOBankUser getUserById(@PathParam("id") int id) {
         return facade.getUserById(id);
     }
+    /**/
+    
+    /**
+     *
+     * @param user
+     * @param passwd
+     * @return 
+     */
+    @GET
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String login(
+            @QueryParam("user") String user,
+            @QueryParam("passwd") String passwd) {
+        if (manager.login(user, passwd)){
+            return "Login Success!";
+        }
+        return "Login Failed";
+    }
     
     @GET
-    @Path("/test/{id}")
+    @Path("/loginv2")
     @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser getUserByIdTest(@PathParam("id") int id) {
-        return facade.testRemFacade(id);
+    public DTOBankUser loginv2(
+            @QueryParam("user") String user,
+            @QueryParam("passwd") String passwd) {
+        
+        /*this.user = manager.loginv2(user, passwd);
+        return this.user;*/
+        return manager.loginv2(user, passwd);
+    }
+    
+    @GET
+    @Path("/islogin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean islogin() {
+        return manager.isLoggedIn();
+        //return this.user != null;
     }
 
     /**
@@ -83,6 +126,16 @@ public class BankUserRS {
         try {
             javax.naming.Context c = new InitialContext();
             return (TUserFacade) c.lookup("java:global/eabankv2-ear-1.0/eabankv2-ejb-1.0/TUserFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    
+    private UserAccountManager lookupUserAccountManagerBean() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (UserAccountManager) c.lookup("java:global/eabankv2-ear-1.0/eabankv2-ejb-1.0/UserAccountManager");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

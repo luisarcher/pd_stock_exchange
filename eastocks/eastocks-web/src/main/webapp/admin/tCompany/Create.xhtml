@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TCompanyCreateDlg" widgetVar="TCompanyCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTCompanyTitle}">
+            <h:form id="TCompanyCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tCompanyController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTCompanyLabel_idCompany}" for="idCompany" />
+                        <p:inputText id="idCompany" value="#{tCompanyController.selected.idCompany}" title="#{bundle.CreateTCompanyTitle_idCompany}" required="true" requiredMessage="#{bundle.CreateTCompanyRequiredMessage_idCompany}"/>
+                        <p:outputLabel value="#{bundle.CreateTCompanyLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{tCompanyController.selected.description}" title="#{bundle.CreateTCompanyTitle_description}" />
+                        <p:outputLabel value="#{bundle.CreateTCompanyLabel_area}" for="area" />
+                        <p:inputText id="area" value="#{tCompanyController.selected.area}" title="#{bundle.CreateTCompanyTitle_area}" />
+                        <p:outputLabel value="#{bundle.CreateTCompanyLabel_shareQuant}" for="shareQuant" />
+                        <p:inputText id="shareQuant" value="#{tCompanyController.selected.shareQuant}" title="#{bundle.CreateTCompanyTitle_shareQuant}" />
+                        <p:outputLabel value="#{bundle.CreateTCompanyLabel_sharePrice}" for="sharePrice" />
+                        <p:inputText id="sharePrice" value="#{tCompanyController.selected.sharePrice}" title="#{bundle.CreateTCompanyTitle_sharePrice}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tCompanyController.create}" value="#{bundle.Save}" update="display,:TCompanyListForm:datalist,:growl" oncomplete="handleSubmit(args,'TCompanyCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TCompanyCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

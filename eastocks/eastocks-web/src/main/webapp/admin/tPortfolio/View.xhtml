@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TPortfolioViewDlg" widgetVar="TPortfolioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTPortfolioTitle}">
+            <h:form id="TPortfolioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tPortfolioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTPortfolioLabel_idPortfolio}"/>
+                        <h:outputText value="#{tPortfolioController.selected.idPortfolio}" title="#{bundle.ViewTPortfolioTitle_idPortfolio}"/>
+                        <h:outputText value="#{bundle.ViewTPortfolioLabel_shareQuant}"/>
+                        <h:outputText value="#{tPortfolioController.selected.shareQuant}" title="#{bundle.ViewTPortfolioTitle_shareQuant}"/>
+                        <h:outputText value="#{bundle.ViewTPortfolioLabel_idCompany}"/>
+                        <h:outputText value="#{tPortfolioController.selected.idCompany}" title="#{bundle.ViewTPortfolioTitle_idCompany}"/>
+                        <h:outputText value="#{bundle.ViewTPortfolioLabel_idUser}"/>
+                        <h:outputText value="#{tPortfolioController.selected.idUser}" title="#{bundle.ViewTPortfolioTitle_idUser}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TPortfolioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

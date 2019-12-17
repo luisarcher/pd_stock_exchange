@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TMessageCreateDlg" widgetVar="TMessageCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTMessageTitle}">
+            <h:form id="TMessageCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tMessageController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_idMessage}" for="idMessage" />
+                        <p:inputText id="idMessage" value="#{tMessageController.selected.idMessage}" title="#{bundle.CreateTMessageTitle_idMessage}" required="true" requiredMessage="#{bundle.CreateTMessageRequiredMessage_idMessage}"/>
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_msgText}" for="msgText" />
+                        <p:inputText id="msgText" value="#{tMessageController.selected.msgText}" title="#{bundle.CreateTMessageTitle_msgText}" />
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy" value="#{tMessageController.selected.createdAt}" title="#{bundle.EditTMessageTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_isviewed}" for="isviewed" />
+                        <p:selectBooleanCheckbox id="isviewed" value="#{tMessageController.selected.isviewed}" />
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_idTo}" for="idTo" />
+                        <p:selectOneMenu id="idTo" value="#{tMessageController.selected.idTo}" >
+                            <f:selectItems value="#{tUserController.itemsAvailableSelectOne}"
+                                           var="idToItem"
+                                           itemValue="#{idToItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTMessageLabel_idFrom}" for="idFrom" />
+                        <p:selectOneMenu id="idFrom" value="#{tMessageController.selected.idFrom}" >
+                            <f:selectItems value="#{tUserController.itemsAvailableSelectOne}"
+                                           var="idFromItem"
+                                           itemValue="#{idFromItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tMessageController.create}" value="#{bundle.Save}" update="display,:TMessageListForm:datalist,:growl" oncomplete="handleSubmit(args,'TMessageCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TMessageCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TPortfolioEditDlg" widgetVar="TPortfolioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTPortfolioTitle}">
+            <h:form id="TPortfolioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tPortfolioController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTPortfolioLabel_idPortfolio}" for="idPortfolio" />
+                        <p:inputText id="idPortfolio" value="#{tPortfolioController.selected.idPortfolio}" title="#{bundle.EditTPortfolioTitle_idPortfolio}" required="true" requiredMessage="#{bundle.EditTPortfolioRequiredMessage_idPortfolio}"/>
+                        <p:outputLabel value="#{bundle.EditTPortfolioLabel_shareQuant}" for="shareQuant" />
+                        <p:inputText id="shareQuant" value="#{tPortfolioController.selected.shareQuant}" title="#{bundle.EditTPortfolioTitle_shareQuant}" />
+                        <p:outputLabel value="#{bundle.EditTPortfolioLabel_idCompany}" for="idCompany" />
+                        <p:selectOneMenu id="idCompany" value="#{tPortfolioController.selected.idCompany}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tCompanyController.itemsAvailableSelectOne}"
+                                           var="idCompanyItem"
+                                           itemValue="#{idCompanyItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditTPortfolioLabel_idUser}" for="idUser" />
+                        <p:selectOneMenu id="idUser" value="#{tPortfolioController.selected.idUser}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tUserController.itemsAvailableSelectOne}"
+                                           var="idUserItem"
+                                           itemValue="#{idUserItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tPortfolioController.update}" value="#{bundle.Save}" update="display,:TPortfolioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TPortfolioEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TPortfolioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

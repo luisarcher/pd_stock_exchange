@@ -73,6 +73,11 @@ public class TUser implements Serializable {
     private Collection<TAccount> tAccountCollection;
 
     public TUser() {
+        this.idUser = 0;
+        this.username = "Unknown username";
+        this.createdAt = new Date();
+        this.name = "Unknown user";
+        this.nif = "";
     }
 
     public TUser(Integer idUser) {

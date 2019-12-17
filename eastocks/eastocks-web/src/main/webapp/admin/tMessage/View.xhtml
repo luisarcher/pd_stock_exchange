@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TMessageViewDlg" widgetVar="TMessageViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTMessageTitle}">
+            <h:form id="TMessageViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tMessageController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTMessageLabel_idMessage}"/>
+                        <h:outputText value="#{tMessageController.selected.idMessage}" title="#{bundle.ViewTMessageTitle_idMessage}"/>
+                        <h:outputText value="#{bundle.ViewTMessageLabel_msgText}"/>
+                        <h:outputText value="#{tMessageController.selected.msgText}" title="#{bundle.ViewTMessageTitle_msgText}"/>
+                        <h:outputText value="#{bundle.ViewTMessageLabel_createdAt}"/>
+                        <h:outputText value="#{tMessageController.selected.createdAt}" title="#{bundle.ViewTMessageTitle_createdAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewTMessageLabel_isviewed}"/>
+                        <p:selectBooleanCheckbox value="#{tMessageController.selected.isviewed}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewTMessageLabel_idTo}"/>
+                        <h:outputText value="#{tMessageController.selected.idTo}" title="#{bundle.ViewTMessageTitle_idTo}"/>
+                        <h:outputText value="#{bundle.ViewTMessageLabel_idFrom}"/>
+                        <h:outputText value="#{tMessageController.selected.idFrom}" title="#{bundle.ViewTMessageTitle_idFrom}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TMessageViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
