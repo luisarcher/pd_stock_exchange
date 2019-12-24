@@ -57,6 +57,9 @@ public class TUser implements Serializable {
     private Collection<TOrder> tOrderCollection;
 
     public TUser() {
+        
+        this.passwd = "pwd";
+        this.username = "username";
     }
 
     public TUser(Integer idUser) {

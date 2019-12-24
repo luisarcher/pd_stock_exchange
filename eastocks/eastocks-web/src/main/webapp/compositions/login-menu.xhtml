@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition id="compLogin">
+
+        <h:form id="frmLogin" rendered="#{ctUserController.loggedInUser == null}">
+            <div class="ui-g-4 visitor-menu">
+                <p:commandButton 
+                    id="registerButton"
+                    value="Sign Up"
+                    oncomplete="PF('TUserCreateDialog').show()"
+                />
+                <p style="margin-left: 2em;"></p>
+                <p:commandButton 
+                    id="loginButton"
+                    value="Sign In"
+                    oncomplete="PF('TUserLoginDialog').show()"
+                />
+            </div>
+        </h:form>
+
+        <h:form id="frmAccMenu" rendered="#{ctUserController.loggedInUser != null}">
+            <div class="ui-g-4 visitor-menu">
+                <p:outputLabel value="Hello, #{ctUserController.loggedInUser}!" />
+                <p style="margin-left: 2em;"></p>
+                
+
+                    <p:menuButton value="My Account">
+                        <p:menuitem value="My Orders" outcome="/pages/user/orders.xhtml" icon="fa fa-shopping-cart"/>
+                        <p:separator />
+                        <p:menuitem id="btnLogout" value="Logout" action="#{ctUserController.logout}" ajax="false"/>
+                    </p:menuButton>
+                
+            </div>
+        </h:form>
+
+    </ui:composition>
+</html>

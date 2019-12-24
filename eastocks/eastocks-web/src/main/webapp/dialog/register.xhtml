@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition id="cmpRegister">
+
+        <p:dialog id="TUserCreateDlg" widgetVar="TUserCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTUserTitle}">
+            <h:form id="TUserCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ctUserController.newUser != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateTUserLabel_username}" for="nameUser" />
+                        <p:inputText id="nameUser" value="#{ctUserController.newUser.username}" title="#{bundle.CreateTUserTitle_username}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateTUserLabel_passwd}" for="passwd" />
+                        <p:inputText id="passwd" value="#{ctUserController.newUser.passwd}" title="#{bundle.CreateTUserTitle_passwd}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ctUserController.register}" value="#{bundle.Save}" update="display,:growl" oncomplete="handleSubmit(args,'TUserCreateDialog');" onclick="TUserCreateDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TUserCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

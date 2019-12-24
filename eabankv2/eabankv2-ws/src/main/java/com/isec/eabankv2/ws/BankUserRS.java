@@ -8,11 +8,9 @@ package com.isec.eabankv2.ws;
 import com.isec.bank.dto.DTOBankUser;
 import com.isec.facades.TUserFacade;
 import com.isec.manager.UserAccountManager;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
@@ -38,8 +36,8 @@ public class BankUserRS {
     @Context
     private UriInfo context;
 
-    @EJB
-    private TUserFacade facade;
+    /*@EJB
+    private TUserFacade facade;*/
     
     @EJB
     private UserAccountManager manager;
@@ -51,17 +49,17 @@ public class BankUserRS {
      * Creates a new instance of BankUserRS
      */
     public BankUserRS() {
-        this.facade = lookupTUserFacadeBean();
+        //this.facade = lookupTUserFacadeBean();
         this.manager = lookupUserAccountManagerBean();
     }
 
     /* Só para efeitos de teste */
-    @GET
+    /*@GET
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public DTOBankUser getUserById(@PathParam("id") int id) {
         return facade.getUserById(id);
-    }
+    }*/
     /**/
     
     /**
@@ -94,13 +92,13 @@ public class BankUserRS {
         return manager.loginv2(user, passwd);
     }
     
-    @GET
+    /*@GET
     @Path("/islogin")
     @Produces(MediaType.APPLICATION_JSON)
     public boolean islogin() {
         return manager.isLoggedIn();
         //return this.user != null;
-    }
+    }*/
 
     /**
      * Retrieves representation of an instance of com.isec.eabankv2.ws.BankUserRS
@@ -122,7 +120,7 @@ public class BankUserRS {
     public void putJson(DTOBankUser content) {
     }
 
-    private TUserFacade lookupTUserFacadeBean() {
+    /*private TUserFacade lookupTUserFacadeBean() {
         try {
             javax.naming.Context c = new InitialContext();
             return (TUserFacade) c.lookup("java:global/eabankv2-ear-1.0/eabankv2-ejb-1.0/TUserFacade");
@@ -130,7 +128,7 @@ public class BankUserRS {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
-    }
+    }*/
     
     private UserAccountManager lookupUserAccountManagerBean() {
         try {

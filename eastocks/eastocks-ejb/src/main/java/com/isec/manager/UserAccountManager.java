@@ -5,8 +5,8 @@
  */
 package com.isec.manager;
 
-import com.isec.bank.dto.DTOBankUser;
-import com.isec.facades.TUserFacade;
+import com.isec.stocks.dto.DTOStocksUser;
+import com.isec.facade.TUserFacade;
 import com.isec.jpa.TUser;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,10 +30,14 @@ public class UserAccountManager {
         return(tUserFacade.getUserByCredentials(user,passwd) != null);
     }
     
-    public DTOBankUser loginv2 (String user, String passwd){
+    public DTOStocksUser loginv2 (String user, String passwd){
         return mapEntityToDTO(tUserFacade.getUserByCredentials(user,passwd));
     }
     
+    public void register(DTOStocksUser dto){
+        this.tUserFacade.create(mapDTOToEntity(dto));
+    }                                                                                                                                  
+        
     // ---------- Business Methods ends ----
 
     public TUserFacade gettUserFacade() {
@@ -44,16 +48,23 @@ public class UserAccountManager {
         this.tUserFacade = tUserFacade;
     }
     
-    private DTOBankUser mapEntityToDTO(TUser e){
+    private DTOStocksUser mapEntityToDTO(TUser e){
         
-        DTOBankUser dto = new DTOBankUser();
+        DTOStocksUser dto = new DTOStocksUser();
         
         dto.setIdUser(e.getIdUser());
         dto.setUsername(e.getUsername());
-        dto.setName(e.getName());
-        dto.setNif(e.getNif());
-        dto.setCreated_at(e.getCreatedAt());
         
         return dto;
+    }
+    
+    private TUser mapDTOToEntity(DTOStocksUser dto){
+        
+        TUser e = new TUser();
+        
+        e.setUsername(dto.getUsername());
+        e.setPasswd(dto.getPasswd());
+        
+        return e;
     }
 }

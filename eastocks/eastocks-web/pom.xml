@@ -49,6 +49,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.isec</groupId>
+            <artifactId>stocks-DTO</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
