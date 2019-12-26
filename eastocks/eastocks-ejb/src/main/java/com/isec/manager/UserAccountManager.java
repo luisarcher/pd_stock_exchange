@@ -7,16 +7,15 @@ package com.isec.manager;
 
 import com.isec.stocks.dto.DTOStocksUser;
 import com.isec.facade.TUserFacade;
-import com.isec.jpa.TUser;
+import com.isec.manager.converter.ConverterTUser;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-/**
- *
- * @author ljordao
- */
 @Stateless
-public class UserAccountManager {
+public class UserAccountManager implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
     @EJB
     private TUserFacade tUserFacade;
@@ -31,17 +30,19 @@ public class UserAccountManager {
     }
     
     public DTOStocksUser loginv2 (String user, String passwd){
-        return mapEntityToDTO(tUserFacade.getUserByCredentials(user,passwd));
+        return ConverterTUser.mapEntityToDTO(tUserFacade.getUserByCredentials(user,passwd));
     }
     
     public void register(DTOStocksUser dto){
-        this.tUserFacade.create(mapDTOToEntity(dto));
+        this.tUserFacade.create(ConverterTUser.mapDTOToEntity(dto));
     }                                                                                                                                  
         
     // ---------- Business Methods ends ----
     
+    // ---------- Getters and Setters ---------
+    
     public DTOStocksUser getUserById(int id){
-        return mapEntityToDTO(tUserFacade.find(id));
+        return ConverterTUser.mapEntityToDTO(tUserFacade.find(id));
     }
 
     public TUserFacade gettUserFacade() {
@@ -52,23 +53,4 @@ public class UserAccountManager {
         this.tUserFacade = tUserFacade;
     }
     
-    private DTOStocksUser mapEntityToDTO(TUser e){
-        
-        DTOStocksUser dto = new DTOStocksUser();
-        
-        dto.setIdUser(e.getIdUser());
-        dto.setUsername(e.getUsername());
-        
-        return dto;
-    }
-    
-    private TUser mapDTOToEntity(DTOStocksUser dto){
-        
-        TUser e = new TUser();
-        
-        e.setUsername(dto.getUsername());
-        e.setPasswd(dto.getPasswd());
-        
-        return e;
-    }
 }
