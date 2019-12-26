@@ -19,14 +19,12 @@
         <p:layout fullPage="true">
             
             <p:layoutUnit position="north" header="#{bundle.AppName}">
-                <h:form id="visitorForm">
                     <div class="ui-g">
                         <div class="ui-g-8">
                             <h1>Triple J Stocks - <ui:insert name="ct_pagename"/></h1>
                         </div>
                         <ui:include src="/compositions/login-menu.xhtml"/>
                     </div>
-                </h:form>
             </p:layoutUnit>
 
             <p:layoutUnit position="right" size="60">
@@ -45,6 +43,6 @@
 
     </h:body>
         
-        <ui:include src="/dialog/login.xhtml"/>
-        <ui:include src="/dialog/register.xhtml"/>
+    <ui:include src="/dialog/login.xhtml"/>
+    <ui:include src="/dialog/register.xhtml"/>
 </html>

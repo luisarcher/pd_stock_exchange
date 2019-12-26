@@ -1,9 +1,9 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
-import com.isec.jpa.TMessage;
+import com.isec.jpa.TUser;
 import com.isec.controller.util.JsfUtil;
 import com.isec.controller.util.JsfUtil.PersistAction;
-import com.isec.facade.TMessageFacade;
+import com.isec.facade.TUserFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("tMessageController")
+@Named("tUserController")
 @SessionScoped
-public class TMessageController implements Serializable {
+public class TUserController implements Serializable {
 
     @EJB
-    private com.isec.facade.TMessageFacade ejbFacade;
-    private List<TMessage> items = null;
-    private TMessage selected;
+    private com.isec.facade.TUserFacade ejbFacade;
+    private List<TUser> items = null;
+    private TUser selected;
 
-    public TMessageController() {
+    public TUserController() {
     }
 
-    public TMessage getSelected() {
+    public TUser getSelected() {
         return selected;
     }
 
-    public void setSelected(TMessage selected) {
+    public void setSelected(TUser selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class TMessageController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TMessageFacade getFacade() {
+    private TUserFacade getFacade() {
         return ejbFacade;
     }
 
-    public TMessage prepareCreate() {
-        selected = new TMessage();
+    public TUser prepareCreate() {
+        selected = new TUser();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TMessageCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TUserCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TMessageUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TUserUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TMessageDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TUserDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<TMessage> getItems() {
+    public List<TUser> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class TMessageController implements Serializable {
         }
     }
 
-    public TMessage getTMessage(java.lang.Integer id) {
+    public TUser getTUser(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<TMessage> getItemsAvailableSelectMany() {
+    public List<TUser> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<TMessage> getItemsAvailableSelectOne() {
+    public List<TUser> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = TMessage.class)
-    public static class TMessageControllerConverter implements Converter {
+    @FacesConverter(forClass = TUser.class)
+    public static class TUserControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TMessageController controller = (TMessageController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tMessageController");
-            return controller.getTMessage(getKey(value));
+            TUserController controller = (TUserController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tUserController");
+            return controller.getTUser(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class TMessageController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TMessage) {
-                TMessage o = (TMessage) object;
-                return getStringKey(o.getIdMessage());
+            if (object instanceof TUser) {
+                TUser o = (TUser) object;
+                return getStringKey(o.getIdUser());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TMessage.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TUser.class.getName()});
                 return null;
             }
         }

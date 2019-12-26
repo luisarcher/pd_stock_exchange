@@ -9,7 +9,7 @@
     <ui:composition id="compLogin">
 
         <h:form id="frmLogin" rendered="#{ctUserController.loggedInUser == null}">
-            <div class="ui-g-4 visitor-menu">
+            <div class="ui-g-6 visitor-menu">
                 <p:commandButton 
                     id="registerButton"
                     value="Sign Up"
@@ -26,16 +26,9 @@
 
         <h:form id="frmAccMenu" rendered="#{ctUserController.loggedInUser != null}">
             <div class="ui-g-4 visitor-menu">
-                <p:outputLabel value="Hello, #{ctUserController.loggedInUser}!" />
+                <p:outputLabel value="Hello, #{ctUserController.loggedInUser.username}!" />
                 <p style="margin-left: 2em;"></p>
-                
-
-                    <p:menuButton value="My Account">
-                        <p:menuitem value="My Orders" outcome="/pages/user/orders.xhtml" icon="fa fa-shopping-cart"/>
-                        <p:separator />
-                        <p:menuitem id="btnLogout" value="Logout" action="#{ctUserController.logout}" ajax="false"/>
-                    </p:menuButton>
-                
+                                
             </div>
         </h:form>
 

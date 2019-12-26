@@ -1,4 +1,4 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
 import com.isec.jpa.TParcel;
 import com.isec.controller.util.JsfUtil;

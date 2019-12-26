@@ -1,9 +1,9 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
-import com.isec.jpa.TPortfolio;
+import com.isec.jpa.TAdmin;
 import com.isec.controller.util.JsfUtil;
 import com.isec.controller.util.JsfUtil.PersistAction;
-import com.isec.facade.TPortfolioFacade;
+import com.isec.facade.TAdminFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("tPortfolioController")
+@Named("tAdminController")
 @SessionScoped
-public class TPortfolioController implements Serializable {
+public class TAdminController implements Serializable {
 
     @EJB
-    private com.isec.facade.TPortfolioFacade ejbFacade;
-    private List<TPortfolio> items = null;
-    private TPortfolio selected;
+    private com.isec.facade.TAdminFacade ejbFacade;
+    private List<TAdmin> items = null;
+    private TAdmin selected;
 
-    public TPortfolioController() {
+    public TAdminController() {
     }
 
-    public TPortfolio getSelected() {
+    public TAdmin getSelected() {
         return selected;
     }
 
-    public void setSelected(TPortfolio selected) {
+    public void setSelected(TAdmin selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class TPortfolioController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TPortfolioFacade getFacade() {
+    private TAdminFacade getFacade() {
         return ejbFacade;
     }
 
-    public TPortfolio prepareCreate() {
-        selected = new TPortfolio();
+    public TAdmin prepareCreate() {
+        selected = new TAdmin();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TPortfolioCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TAdminCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TPortfolioUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TAdminUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TPortfolioDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TAdminDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<TPortfolio> getItems() {
+    public List<TAdmin> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class TPortfolioController implements Serializable {
         }
     }
 
-    public TPortfolio getTPortfolio(java.lang.Integer id) {
+    public TAdmin getTAdmin(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<TPortfolio> getItemsAvailableSelectMany() {
+    public List<TAdmin> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<TPortfolio> getItemsAvailableSelectOne() {
+    public List<TAdmin> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = TPortfolio.class)
-    public static class TPortfolioControllerConverter implements Converter {
+    @FacesConverter(forClass = TAdmin.class)
+    public static class TAdminControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TPortfolioController controller = (TPortfolioController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tPortfolioController");
-            return controller.getTPortfolio(getKey(value));
+            TAdminController controller = (TAdminController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tAdminController");
+            return controller.getTAdmin(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class TPortfolioController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TPortfolio) {
-                TPortfolio o = (TPortfolio) object;
-                return getStringKey(o.getIdPortfolio());
+            if (object instanceof TAdmin) {
+                TAdmin o = (TAdmin) object;
+                return getStringKey(o.getIdAdmin());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TPortfolio.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TAdmin.class.getName()});
                 return null;
             }
         }

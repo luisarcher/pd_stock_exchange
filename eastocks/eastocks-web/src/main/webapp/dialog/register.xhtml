@@ -8,7 +8,7 @@
 
     <ui:composition id="cmpRegister">
 
-        <p:dialog id="TUserCreateDlg" widgetVar="TUserCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTUserTitle}">
+        <p:dialog id="TUserCreateDialog" widgetVar="TUserCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTUserTitle}">
             <h:form id="TUserCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{ctUserController.newUser != null}">
@@ -20,7 +20,7 @@
                         <p:inputText id="passwd" value="#{ctUserController.newUser.passwd}" title="#{bundle.CreateTUserTitle_passwd}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{ctUserController.register}" value="#{bundle.Save}" update="display,:growl" oncomplete="handleSubmit(args,'TUserCreateDialog');" onclick="TUserCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{ctUserController.register}" value="#{bundle.Save}" update="growl" oncomplete="handleSubmit(args,'TUserCreateDialog');" onclick="TUserCreateDialog.hide()"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TUserCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

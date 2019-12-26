@@ -1,9 +1,9 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
-import com.isec.jpa.TAdmin;
+import com.isec.jpa.TMessage;
 import com.isec.controller.util.JsfUtil;
 import com.isec.controller.util.JsfUtil.PersistAction;
-import com.isec.facade.TAdminFacade;
+import com.isec.facade.TMessageFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("tAdminController")
+@Named("tMessageController")
 @SessionScoped
-public class TAdminController implements Serializable {
+public class TMessageController implements Serializable {
 
     @EJB
-    private com.isec.facade.TAdminFacade ejbFacade;
-    private List<TAdmin> items = null;
-    private TAdmin selected;
+    private com.isec.facade.TMessageFacade ejbFacade;
+    private List<TMessage> items = null;
+    private TMessage selected;
 
-    public TAdminController() {
+    public TMessageController() {
     }
 
-    public TAdmin getSelected() {
+    public TMessage getSelected() {
         return selected;
     }
 
-    public void setSelected(TAdmin selected) {
+    public void setSelected(TMessage selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class TAdminController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TAdminFacade getFacade() {
+    private TMessageFacade getFacade() {
         return ejbFacade;
     }
 
-    public TAdmin prepareCreate() {
-        selected = new TAdmin();
+    public TMessage prepareCreate() {
+        selected = new TMessage();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TAdminCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TMessageCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TAdminUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TMessageUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TAdminDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TMessageDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<TAdmin> getItems() {
+    public List<TMessage> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class TAdminController implements Serializable {
         }
     }
 
-    public TAdmin getTAdmin(java.lang.Integer id) {
+    public TMessage getTMessage(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<TAdmin> getItemsAvailableSelectMany() {
+    public List<TMessage> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<TAdmin> getItemsAvailableSelectOne() {
+    public List<TMessage> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = TAdmin.class)
-    public static class TAdminControllerConverter implements Converter {
+    @FacesConverter(forClass = TMessage.class)
+    public static class TMessageControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TAdminController controller = (TAdminController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tAdminController");
-            return controller.getTAdmin(getKey(value));
+            TMessageController controller = (TMessageController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tMessageController");
+            return controller.getTMessage(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class TAdminController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TAdmin) {
-                TAdmin o = (TAdmin) object;
-                return getStringKey(o.getIdAdmin());
+            if (object instanceof TMessage) {
+                TMessage o = (TMessage) object;
+                return getStringKey(o.getIdMessage());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TAdmin.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TMessage.class.getName()});
                 return null;
             }
         }

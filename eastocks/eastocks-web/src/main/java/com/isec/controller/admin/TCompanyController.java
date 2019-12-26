@@ -1,9 +1,9 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
-import com.isec.jpa.TOrder;
+import com.isec.jpa.TCompany;
 import com.isec.controller.util.JsfUtil;
 import com.isec.controller.util.JsfUtil.PersistAction;
-import com.isec.facade.TOrderFacade;
+import com.isec.facade.TCompanyFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("tOrderController")
+@Named("tCompanyController")
 @SessionScoped
-public class TOrderController implements Serializable {
+public class TCompanyController implements Serializable {
 
     @EJB
-    private com.isec.facade.TOrderFacade ejbFacade;
-    private List<TOrder> items = null;
-    private TOrder selected;
+    private com.isec.facade.TCompanyFacade ejbFacade;
+    private List<TCompany> items = null;
+    private TCompany selected;
 
-    public TOrderController() {
+    public TCompanyController() {
     }
 
-    public TOrder getSelected() {
+    public TCompany getSelected() {
         return selected;
     }
 
-    public void setSelected(TOrder selected) {
+    public void setSelected(TCompany selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class TOrderController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TOrderFacade getFacade() {
+    private TCompanyFacade getFacade() {
         return ejbFacade;
     }
 
-    public TOrder prepareCreate() {
-        selected = new TOrder();
+    public TCompany prepareCreate() {
+        selected = new TCompany();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TOrderCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TCompanyCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TOrderUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TCompanyUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TOrderDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TCompanyDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<TOrder> getItems() {
+    public List<TCompany> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class TOrderController implements Serializable {
         }
     }
 
-    public TOrder getTOrder(java.lang.Integer id) {
+    public TCompany getTCompany(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<TOrder> getItemsAvailableSelectMany() {
+    public List<TCompany> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<TOrder> getItemsAvailableSelectOne() {
+    public List<TCompany> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = TOrder.class)
-    public static class TOrderControllerConverter implements Converter {
+    @FacesConverter(forClass = TCompany.class)
+    public static class TCompanyControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TOrderController controller = (TOrderController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tOrderController");
-            return controller.getTOrder(getKey(value));
+            TCompanyController controller = (TCompanyController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tCompanyController");
+            return controller.getTCompany(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class TOrderController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TOrder) {
-                TOrder o = (TOrder) object;
-                return getStringKey(o.getIdOrder());
+            if (object instanceof TCompany) {
+                TCompany o = (TCompany) object;
+                return getStringKey(o.getIdCompany());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TOrder.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TCompany.class.getName()});
                 return null;
             }
         }

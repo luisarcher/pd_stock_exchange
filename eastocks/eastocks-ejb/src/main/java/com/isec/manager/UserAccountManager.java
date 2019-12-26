@@ -39,6 +39,10 @@ public class UserAccountManager {
     }                                                                                                                                  
         
     // ---------- Business Methods ends ----
+    
+    public DTOStocksUser getUserById(int id){
+        return mapEntityToDTO(tUserFacade.find(id));
+    }
 
     public TUserFacade gettUserFacade() {
         return tUserFacade;

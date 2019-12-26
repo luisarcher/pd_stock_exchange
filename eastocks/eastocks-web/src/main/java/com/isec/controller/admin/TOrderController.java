@@ -1,9 +1,9 @@
-package com.isec.controller;
+package com.isec.controller.admin;
 
-import com.isec.jpa.TUser;
+import com.isec.jpa.TOrder;
 import com.isec.controller.util.JsfUtil;
 import com.isec.controller.util.JsfUtil.PersistAction;
-import com.isec.facade.TUserFacade;
+import com.isec.facade.TOrderFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("tUserController")
+@Named("tOrderController")
 @SessionScoped
-public class TUserController implements Serializable {
+public class TOrderController implements Serializable {
 
     @EJB
-    private com.isec.facade.TUserFacade ejbFacade;
-    private List<TUser> items = null;
-    private TUser selected;
+    private com.isec.facade.TOrderFacade ejbFacade;
+    private List<TOrder> items = null;
+    private TOrder selected;
 
-    public TUserController() {
+    public TOrderController() {
     }
 
-    public TUser getSelected() {
+    public TOrder getSelected() {
         return selected;
     }
 
-    public void setSelected(TUser selected) {
+    public void setSelected(TOrder selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class TUserController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TUserFacade getFacade() {
+    private TOrderFacade getFacade() {
         return ejbFacade;
     }
 
-    public TUser prepareCreate() {
-        selected = new TUser();
+    public TOrder prepareCreate() {
+        selected = new TOrder();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TUserCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TOrderCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TUserUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TOrderUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TUserDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TOrderDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<TUser> getItems() {
+    public List<TOrder> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class TUserController implements Serializable {
         }
     }
 
-    public TUser getTUser(java.lang.Integer id) {
+    public TOrder getTOrder(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<TUser> getItemsAvailableSelectMany() {
+    public List<TOrder> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<TUser> getItemsAvailableSelectOne() {
+    public List<TOrder> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = TUser.class)
-    public static class TUserControllerConverter implements Converter {
+    @FacesConverter(forClass = TOrder.class)
+    public static class TOrderControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            TUserController controller = (TUserController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "tUserController");
-            return controller.getTUser(getKey(value));
+            TOrderController controller = (TOrderController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tOrderController");
+            return controller.getTOrder(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class TUserController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof TUser) {
-                TUser o = (TUser) object;
-                return getStringKey(o.getIdUser());
+            if (object instanceof TOrder) {
+                TOrder o = (TOrder) object;
+                return getStringKey(o.getIdOrder());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TUser.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TOrder.class.getName()});
                 return null;
             }
         }
