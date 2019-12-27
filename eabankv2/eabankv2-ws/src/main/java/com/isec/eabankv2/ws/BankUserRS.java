@@ -92,6 +92,16 @@ public class BankUserRS {
         return manager.loginv2(user, passwd);
     }
     
+    ///accounts?user=user1&pass=123
+            
+   // /accounts?token=67427343v2u342bhjurw
+    
+    //POST
+    ///account/1?val=50?user=___&pass=____
+    // @PathParam("id")
+            
+            
+            
     /*@GET
     @Path("/islogin")
     @Produces(MediaType.APPLICATION_JSON)

@@ -6,7 +6,6 @@
 package com.isec.manager;
 
 import com.isec.facade.TCompanyFacade;
-import com.isec.jpa.TUser;
 import com.isec.manager.converter.ConverterTCompany;
 import com.isec.stocks.dto.DTOStocksCompany;
 import java.io.Serializable;
