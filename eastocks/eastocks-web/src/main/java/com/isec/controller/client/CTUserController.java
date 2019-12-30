@@ -53,10 +53,15 @@ public class CTUserController implements Serializable {
     
     /* ------ Business Methods ----- */
     public void login(){
-        loggedInUser = stocksManager.loginv2(userLogin, userPasswd);
+        this.loggedInUser = stocksManager.loginv2(userLogin, userPasswd);
+        
+        System.err.println("Atempting to login with: " + userLogin + " and " + userPasswd);
+        
+        
         if(loggedInUser != null){
-            JsfUtil.redirect("/pages/portofolio.xhtml");
+            
             JsfUtil.addSuccessMessage("Login Success!");
+            //JsfUtil.redirect("/pages/portofolio.xhtml");
         }
         else {
             JsfUtil.addErrorMessage("Login Failed!"); 
