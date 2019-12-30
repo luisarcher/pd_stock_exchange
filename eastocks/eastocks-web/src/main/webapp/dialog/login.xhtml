@@ -16,9 +16,9 @@
                         <p:inputText id="login" value="#{ctUserController.userLogin}" title="#{bundle.CreateTUserTitle_username}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
                         <p:outputLabel value="#{bundle.CreateTUserLabel_passwd}" for="passwd" />
                         <p:inputText id="passwd" value="#{ctUserController.userPasswd}" title="#{bundle.CreateTUserTitle_passwd}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
-                        
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{ctUserController.login}" value="Login" update="display,:growl" oncomplete="handleSubmit(args,'TUserLoginDialog');" onclick="TUserLoginDialog.hide()"/>
+                    
+                    <p:commandButton style="margin-right:5px;" actionListener="#{ctUserController.login}" value="Login" update="display,:growl" oncomplete="handleSubmit(args,'TUserLoginDialog');" onclick="TUserLoginDialog.hide()"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TUserLoginDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

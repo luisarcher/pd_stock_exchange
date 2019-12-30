@@ -23,7 +23,21 @@
                     <div class="ui-g-8">
                         <h1>Triple J Stocks - <ui:insert name="ct_pagename"/></h1>
                     </div>
-                    <ui:include src="/compositions/login-menu.xhtml"/>
+                    
+                    <h:form id="frmLogin">
+                        <div class="ui-g-6 visitor-menu">
+                            <p:commandButton
+                                id="registerButton"
+                                value="Sign Up"
+                                oncomplete="PF('TUserCreateDialog').show()"
+                            />
+                            <p:commandButton
+                                id="loginButton"
+                                value="Sign In"
+                                oncomplete="PF('TUserLoginDialog').show()"
+                            />
+                        </div>
+                     </h:form>
                 </div>
             </p:layoutUnit>
 

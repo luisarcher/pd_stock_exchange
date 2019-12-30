@@ -20,7 +20,7 @@
                         <p:inputText id="passwd" value="#{ctUserController.newUser.passwd}" title="#{bundle.CreateTUserTitle_passwd}" required="true" requiredMessage="#{bundle.CreateTUserRequiredMessage_idUser}"/>
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{ctUserController.register}" value="#{bundle.Save}" update="growl" oncomplete="handleSubmit(args,'TUserCreateDialog');" onclick="TUserCreateDialog.hide()"/>
+                    <p:commandButton style="margin-right:5px;" actionListener="#{ctUserController.register}" value="#{bundle.Save}" update="growl" oncomplete="handleSubmit(args,'TUserCreateDialog');" onclick="TUserCreateDialog.hide()"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="TUserCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
