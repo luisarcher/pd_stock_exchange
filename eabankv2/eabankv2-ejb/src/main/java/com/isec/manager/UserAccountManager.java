@@ -5,9 +5,14 @@
  */
 package com.isec.manager;
 
+import com.isec.bank.dto.DTOBankAccount;
 import com.isec.bank.dto.DTOBankUser;
+import com.isec.facades.TAccountFacade;
+import com.isec.facades.TAdminFacade;
 import com.isec.facades.TUserFacade;
 import com.isec.jpa.TUser;
+import com.isec.manager.converter.ConverterTAccount;
+import com.isec.manager.converter.ConverterTUser;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -21,6 +26,12 @@ public class UserAccountManager {
     @EJB
     private TUserFacade tUserFacade;
     
+    @EJB
+    private TAccountFacade tAccountFacade;
+    
+    @EJB
+    private TAdminFacade tAdminFacade;
+    
     public UserAccountManager() {
     }
     
@@ -31,8 +42,34 @@ public class UserAccountManager {
     }
     
     public DTOBankUser loginv2 (String user, String passwd){
-        return mapEntityToDTO(tUserFacade.getUserByCredentials(user,passwd));
+        return ConverterTUser.mapEntityToDTO(tUserFacade.getUserByCredentials(user,passwd));
     }
+    
+    public DTOBankAccount getUserAccount(int id, String user, String passwd){
+        
+        if (this.tAdminFacade.isAdmin(user, passwd)){
+            return ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+        } else {
+            TUser auth = tUserFacade.getUserByCredentials(user,passwd);
+            if (auth == null){
+                return null;
+            } else {
+                // Gets account by id
+                DTOBankAccount acc = ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+                if (acc != null){
+                    // If this account belongs to the user, he is able to read it.
+                    if (auth.getIdUser().equals(acc.getIdUser())){
+                        return acc;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    /*public DTOBankAccount getUserAccount(int id, String auth){
+        // Not supported yet!
+    }*/
     
     // ---------- Business Methods ends ----
 
@@ -42,18 +79,5 @@ public class UserAccountManager {
 
     public void settUserFacade(TUserFacade tUserFacade) {
         this.tUserFacade = tUserFacade;
-    }
-    
-    private DTOBankUser mapEntityToDTO(TUser e){
-        
-        DTOBankUser dto = new DTOBankUser();
-        
-        dto.setIdUser(e.getIdUser());
-        dto.setUsername(e.getUsername());
-        dto.setName(e.getName());
-        dto.setNif(e.getNif());
-        dto.setCreated_at(e.getCreatedAt());
-        
-        return dto;
     }
 }

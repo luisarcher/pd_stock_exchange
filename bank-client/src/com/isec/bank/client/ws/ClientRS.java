@@ -26,21 +26,29 @@ public class ClientRS {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://172.1.0.97:8080/eabankv2-ws/webresources";
+    
+    private String user;
+    private String passwd;
 
     public ClientRS() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("BankUserRS");
+        webTarget = client.target(BASE_URI).path("BankRS");
     }
-
+    
     public void putJson(Object requestEntity) throws ClientErrorException {
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
-    public <T> T getUserById(Class<T> responseType, String id) throws ClientErrorException {
+    public <T> T getAccountById(Class<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("user/{0}", new Object[]{id}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+        resource = resource.path(java.text.MessageFormat.format("account/{0}", new Object[]{id}));
+                
+        return resource.queryParam("user", user)
+                .queryParam("passwd", passwd)
+                .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
+    
+    
 
     public <T> T getJson(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
@@ -49,6 +57,22 @@ public class ClientRS {
 
     public void close() {
         client.close();
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
     
 }

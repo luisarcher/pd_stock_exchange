@@ -5,6 +5,7 @@
  */
 package com.isec.eabankv2.ws;
 
+import com.isec.bank.dto.DTOBankAccount;
 import com.isec.bank.dto.DTOBankUser;
 import com.isec.facades.TUserFacade;
 import com.isec.manager.UserAccountManager;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -29,15 +31,12 @@ import javax.ws.rs.core.MediaType;
  *
  * @author ljordao
  */
-@Path("BankUserRS")
+@Path("BankRS")
 //@SessionScoped
-public class BankUserRS {
+public class BankRS {
 
     @Context
     private UriInfo context;
-
-    /*@EJB
-    private TUserFacade facade;*/
     
     @EJB
     private UserAccountManager manager;
@@ -48,70 +47,51 @@ public class BankUserRS {
     /**
      * Creates a new instance of BankUserRS
      */
-    public BankUserRS() {
+    public BankRS() {
         //this.facade = lookupTUserFacadeBean();
         this.manager = lookupUserAccountManagerBean();
     }
 
-    /* Só para efeitos de teste */
-    /*@GET
-    @Path("/user/{id}")
+    @GET
+    @Path("/account/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser getUserById(@PathParam("id") int id) {
+    public DTOBankAccount getAccountById(
+            @PathParam("id") int id, 
+            @QueryParam("user") String user,
+            @QueryParam("passwd") String passwd) {
+        
+        DTOBankAccount account = manager.getUserAccount(id, user, passwd);
+        
+        if (account == null){
+            throw new ForbiddenException();
+        }
+        return account;
+    }
+    
+    /*@GET
+    @Path("/accounts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DTOBankUser getUserAccounts(@PathParam("id") int id) {
         return facade.getUserById(id);
     }*/
-    /**/
-    
+        
     /**
      *
      * @param user
      * @param passwd
      * @return 
      */
-    @GET
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String login(
-            @QueryParam("user") String user,
-            @QueryParam("passwd") String passwd) {
-        if (manager.login(user, passwd)){
-            return "Login Success!";
-        }
-        return "Login Failed";
-    }
-    
-    @GET
-    @Path("/loginv2")
-    @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser loginv2(
-            @QueryParam("user") String user,
-            @QueryParam("passwd") String passwd) {
         
-        /*this.user = manager.loginv2(user, passwd);
-        return this.user;*/
-        return manager.loginv2(user, passwd);
-    }
-    
     ///accounts?user=user1&pass=123
             
-   // /accounts?token=67427343v2u342bhjurw
+    ///accounts?token=67427343v2u342bhjurw
     
     //POST
     ///account/1?val=50?user=___&pass=____
     // @PathParam("id")
-            
-            
-            
-    /*@GET
-    @Path("/islogin")
-    @Produces(MediaType.APPLICATION_JSON)
-    public boolean islogin() {
-        return manager.isLoggedIn();
-        //return this.user != null;
-    }*/
 
     /**
-     * Retrieves representation of an instance of com.isec.eabankv2.ws.BankUserRS
+     * Retrieves representation of an instance of com.isec.eabankv2.ws.BankRS
      * @return an instance of com.isec.bank.dto.DTOBankUser
      */
     @GET
@@ -122,23 +102,13 @@ public class BankUserRS {
     }
 
     /**
-     * PUT method for updating or creating an instance of BankUserRS
+     * PUT method for updating or creating an instance of BankRS
      * @param content representation for the resource
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(DTOBankUser content) {
     }
-
-    /*private TUserFacade lookupTUserFacadeBean() {
-        try {
-            javax.naming.Context c = new InitialContext();
-            return (TUserFacade) c.lookup("java:global/eabankv2-ear-1.0/eabankv2-ejb-1.0/TUserFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }*/
     
     private UserAccountManager lookupUserAccountManagerBean() {
         try {

@@ -29,4 +29,8 @@ public class TAccountFacade extends AbstractFacade<TAccount> {
         super(TAccount.class);
     }
     
+    public TAccount getAccountById(int id){
+        return this.find(id);
+    }
+    
 }

@@ -6,6 +6,7 @@
 package com.isec.bank.client;
 
 import com.isec.bank.client.ws.ClientRS;
+import com.isec.bank.dto.DTOBankAccount;
 import com.isec.bank.dto.DTOBankUser;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -23,13 +24,18 @@ public class Main {
         // TODO code application logic here
         
         ClientRS c = new ClientRS();
+        c.setUser("luis");
+        c.setPasswd("123");
         
-        Response r = c.getUserById(Response.class, "1");
+        
+        Response r = c.getAccountById(Response.class, "1000");
         System.out.println("Status: " + r.getStatus());
+                
+        if (r.getStatus() != 200) return;
         
-        DTOBankUser obj = r.readEntity(new GenericType<DTOBankUser>(){});
-        System.out.println(obj.getName());
-        System.out.println(obj.getNif());
+        DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
+        System.out.println(obj.getIdAccount());
+        System.out.println(obj.getBalance());
         
         c.close();
         

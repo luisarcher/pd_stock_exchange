@@ -34,9 +34,14 @@ public class TUserFacade extends AbstractFacade<TUser> {
         super(TUser.class);
     }
     
+    /*@Override
+    public void create(TUser entity){
+        //java.util.UUID.randomUUID();
+    }*/
+    
     public TUser getUserByCredentials(String username, String passwd){
         
-        TUser user = new TUser();
+        TUser user = null;
         
         Query query = em.createQuery("SELECT t FROM TUser t WHERE t.username = :username AND t.passwd = :passwd");
         query.setParameter("username", username);

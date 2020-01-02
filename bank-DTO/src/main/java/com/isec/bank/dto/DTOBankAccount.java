@@ -20,6 +20,7 @@ public class DTOBankAccount implements Serializable{
     private Double balance;
     private Date created_at;
     private int status;
+    private int idUser;
 
     public DTOBankAccount() {
     }
@@ -61,6 +62,14 @@ public class DTOBankAccount implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
     
     
