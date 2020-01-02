@@ -9,6 +9,7 @@ import com.isec.bank.dto.DTOBankAccount;
 import com.isec.bank.dto.DTOBankUser;
 import com.isec.facades.TUserFacade;
 import com.isec.manager.UserAccountManager;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -24,7 +25,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -68,12 +71,17 @@ public class BankRS {
         return account;
     }
     
-    /*@GET
+    @GET
     @Path("/accounts")
     @Produces(MediaType.APPLICATION_JSON)
-    public DTOBankUser getUserAccounts(@PathParam("id") int id) {
-        return facade.getUserById(id);
-    }*/
+    public Response getAllAccounts(
+            @QueryParam("user") String user,
+            @QueryParam("passwd") String passwd) {
+        
+        GenericEntity<List<DTOBankAccount>> list = new GenericEntity<List<DTOBankAccount>>(manager.getAllAccounts(user, passwd)) {};
+        return Response.ok(list).build();
+        
+    }
         
     /**
      *

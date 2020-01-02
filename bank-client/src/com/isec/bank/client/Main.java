@@ -8,6 +8,7 @@ package com.isec.bank.client;
 import com.isec.bank.client.ws.ClientRS;
 import com.isec.bank.dto.DTOBankAccount;
 import com.isec.bank.dto.DTOBankUser;
+import java.util.List;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -17,16 +18,41 @@ import javax.ws.rs.core.Response;
  */
 public class Main {
 
+    static ClientRS c;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
         
-        ClientRS c = new ClientRS();
+        c = new ClientRS();
         c.setUser("luis");
         c.setPasswd("123");
         
+        listAllAccounts();
+        System.out.println("");
+        getAccountDetails(1000);
+        
+        c.close();
+    }
+    
+    public static void listAllAccounts(){
+        
+        
+        
+        Response r = c.getAllAccounts(Response.class, null);
+        System.out.println("Status: " + r.getStatus());
+        List<DTOBankAccount> list = r.readEntity(new GenericType<List<DTOBankAccount>>(){});
+        
+        System.out.println("\nlista de contas: ");
+        for (DTOBankAccount i: list){
+            System.out.println("ID: " + i.getIdAccount() + " - Valor: " + i.getBalance());
+        }
+        
+    }
+    
+    public static void getAccountDetails(int accNum){
         
         Response r = c.getAccountById(Response.class, "1000");
         System.out.println("Status: " + r.getStatus());
@@ -34,10 +60,9 @@ public class Main {
         if (r.getStatus() != 200) return;
         
         DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
+        System.out.println("Detalhes da conta 1000: ");
         System.out.println(obj.getIdAccount());
         System.out.println(obj.getBalance());
-        
-        c.close();
         
     }
 }

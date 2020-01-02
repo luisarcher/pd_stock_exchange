@@ -48,7 +48,30 @@ public class ClientRS {
                 .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
     
+    public <T> T addAccountCredits(Class<T> responseType, String id, int val) throws ClientErrorException {
+        
+        return null; // to delete
+        /*WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("account/{0}", new Object[]{id}));
+                
+        return resource.queryParam("user", user)
+                .queryParam("passwd", passwd)
+                .queryParam("val", val)
+                .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(responseType);*/
+        
+        // how to post request: /account/1000?user=luis&passwd=123&val=40
+        
+    }
     
+    public <T> T getAllAccounts(Class<T> responseType, String dest) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        
+        resource = resource.queryParam("user", user)
+                .queryParam("passwd", passwd);
+        
+        resource = resource.path("accounts");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
 
     public <T> T getJson(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;

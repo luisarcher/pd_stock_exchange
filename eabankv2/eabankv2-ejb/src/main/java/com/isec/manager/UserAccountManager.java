@@ -13,6 +13,7 @@ import com.isec.facades.TUserFacade;
 import com.isec.jpa.TUser;
 import com.isec.manager.converter.ConverterTAccount;
 import com.isec.manager.converter.ConverterTUser;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -46,7 +47,7 @@ public class UserAccountManager {
     }
     
     public DTOBankAccount getUserAccount(int id, String user, String passwd){
-        
+
         if (this.tAdminFacade.isAdmin(user, passwd)){
             return ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
         } else {
@@ -70,6 +71,16 @@ public class UserAccountManager {
     /*public DTOBankAccount getUserAccount(int id, String auth){
         // Not supported yet!
     }*/
+    
+    public List<DTOBankAccount> getAllAccounts(String user, String passwd){
+        
+        TUser auth = tUserFacade.getUserByCredentials(user,passwd);
+        if (auth == null){
+            return null;
+        } else {
+            return ConverterTAccount.mapAllEntitiesToDTO(this.tAccountFacade.getAllAccountsByUser(auth));
+        }
+    }
     
     // ---------- Business Methods ends ----
 
