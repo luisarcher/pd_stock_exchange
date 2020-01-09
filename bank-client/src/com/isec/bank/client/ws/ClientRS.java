@@ -63,6 +63,14 @@ public class ClientRS {
         
     }
     
+    public <T> T decreaseAccountCredits(Class<T> responseType, String id, int val) throws ClientErrorException {
+        
+        return null; // to delete
+                
+        // how to post request: /account/1000?user=luis&passwd=123&val=40
+        
+    }
+    
     public <T> T getAllAccounts(Class<T> responseType, String dest) throws ClientErrorException {
         WebTarget resource = webTarget;
         
