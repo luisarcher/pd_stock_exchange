@@ -33,14 +33,12 @@ public class Main {
         listAllAccounts();
         System.out.println("");
         getAccountDetails(1000);
+        editAccountValue(1000, 10);
         
         c.close();
     }
     
     public static void listAllAccounts(){
-        
-        
-        
         Response r = c.getAllAccounts(Response.class, null);
         System.out.println("Status: " + r.getStatus());
         List<DTOBankAccount> list = r.readEntity(new GenericType<List<DTOBankAccount>>(){});
@@ -49,20 +47,33 @@ public class Main {
         for (DTOBankAccount i: list){
             System.out.println("ID: " + i.getIdAccount() + " - Valor: " + i.getBalance());
         }
-        
     }
     
     public static void getAccountDetails(int accNum){
-        
-        Response r = c.getAccountById(Response.class, "1000");
+        String n = Integer.toString(accNum);
+        Response r = c.getAccountById(Response.class, n);
         System.out.println("Status: " + r.getStatus());
                 
         if (r.getStatus() != 200) return;
         
         DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
-        System.out.println("Detalhes da conta 1000: ");
+        System.out.println("Detalhes da conta " + accNum);
         System.out.println(obj.getIdAccount());
         System.out.println(obj.getBalance());
-        
     }
+    
+    public static void editAccountValue(int accNum, int val){
+        String n = Integer.toString(accNum);
+        Response r = c.getAccountById(Response.class, n);
+        System.out.println("Status: " + r.getStatus());
+        
+        if (r.getStatus() != 200) return;
+        DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
+        System.out.println("Saldo da conta " + accNum + " alterado");
+        obj.setBalance(obj.getBalance()+val);
+        System.out.println(obj.getIdAccount());
+        System.out.println(obj.getBalance());
+    }
+    
+    
 }
