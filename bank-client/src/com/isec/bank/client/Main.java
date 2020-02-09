@@ -23,16 +23,17 @@ public class Main {
         c.setUser("luis");
         c.setPasswd("123");
         
+        System.out.println("-------------------------------");
+        System.out.println("1 - Listagem de contas");
+        System.out.println("2 - Obter detalhes da conta");
+        System.out.println("3 - Editar saldo da conta");
+        System.out.println("0 - Sair");
+        System.out.println("-------------------------------");
+        
         // MENU
         String choice = null;
         Scanner scan = new Scanner(System.in);
-        do {
-            System.out.println(" ");
-            System.out.println("1 - Listagem de contas");
-            System.out.println("2 - Obter detalhes da conta");
-            System.out.println("3 - Editar saldo da conta");
-            System.out.println("0 - Sair");
-            
+        do {            
             choice = scan.nextLine();
             switch (choice) {
             case "1":
