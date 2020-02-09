@@ -7,7 +7,6 @@ package com.isec.bank.client;
 
 import com.isec.bank.client.ws.ClientRS;
 import com.isec.bank.dto.DTOBankAccount;
-import com.isec.bank.dto.DTOBankUser;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -33,7 +32,9 @@ public class Main {
         listAllAccounts();
         System.out.println("");
         getAccountDetails(1000);
-        editAccountValue(1000, 10);
+        setAccountValue(1000,10);
+        
+        getAccountDetails(1000);
         
         c.close();
     }
@@ -60,20 +61,12 @@ public class Main {
         System.out.println("Detalhes da conta " + accNum);
         System.out.println(obj.getIdAccount());
         System.out.println(obj.getBalance());
-    }
+    } 
     
-    public static void editAccountValue(int accNum, int val){
+    public static void setAccountValue(int accNum, int val){
         String n = Integer.toString(accNum);
-        Response r = c.getAccountById(Response.class, n);
-        System.out.println("Status: " + r.getStatus());
+        Response r = c.getAccountById(Response.class, n); 
         
-        if (r.getStatus() != 200) return;
-        DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
-        System.out.println("Saldo da conta " + accNum + " alterado");
-        obj.setBalance(obj.getBalance()+val);
-        System.out.println(obj.getIdAccount());
-        System.out.println(obj.getBalance());
+        c.setAccountCredits(Response.class, accNum, val);
     }
-    
-    
 }

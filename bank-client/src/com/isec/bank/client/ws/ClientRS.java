@@ -8,6 +8,7 @@ package com.isec.bank.client.ws;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 /**
  * Jersey REST client generated for REST resource:BankUserRS [BankUserRS]<br>
@@ -48,27 +49,13 @@ public class ClientRS {
                 .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
     
-    public <T> T addAccountCredits(Class<T> responseType, String id, int val) throws ClientErrorException {
-        
-        return null; // to delete
-        /*WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("account/{0}", new Object[]{id}));
+     public <T> T setAccountCredits(Class<T> responseType, int accNum, int val) {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("account/{0}/val={1}", new Object[]{accNum, val}));
                 
         return resource.queryParam("user", user)
                 .queryParam("passwd", passwd)
-                .queryParam("val", val)
-                .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(responseType);*/
-        
-        // how to post request: /account/1000?user=luis&passwd=123&val=40
-        
-    }
-    
-    public <T> T decreaseAccountCredits(Class<T> responseType, String id, int val) throws ClientErrorException {
-        
-        return null; // to delete
-                
-        // how to post request: /account/1000?user=luis&passwd=123&val=40
-        
+                .request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
     
     public <T> T getAllAccounts(Class<T> responseType, String dest) throws ClientErrorException {
@@ -105,5 +92,5 @@ public class ClientRS {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
-    
+
 }

@@ -10,12 +10,15 @@ import com.isec.bank.dto.DTOBankUser;
 import com.isec.facades.TAccountFacade;
 import com.isec.facades.TAdminFacade;
 import com.isec.facades.TUserFacade;
+import com.isec.jpa.TAccount;
 import com.isec.jpa.TUser;
 import com.isec.manager.converter.ConverterTAccount;
 import com.isec.manager.converter.ConverterTUser;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -67,6 +70,23 @@ public class UserAccountManager {
         }
         return null;
     }
+    
+    public DTOBankAccount setAccountValue(int id, String user, String passwd, int val){
+
+        TUser auth = tUserFacade.getUserByCredentials(user,passwd);
+
+        DTOBankAccount acc = ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+        if (acc != null){
+            // If this account belongs to the user, he is able to read it.
+            if (auth.getIdUser().equals(acc.getIdUser())){
+                acc.setBalance(acc.getBalance()+val);
+                return acc;
+            }
+        }
+        
+        return acc;
+    }
+   
     
     /*public DTOBankAccount getUserAccount(int id, String auth){
         // Not supported yet!

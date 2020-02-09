@@ -21,6 +21,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
@@ -81,6 +83,18 @@ public class BankRS {
         GenericEntity<List<DTOBankAccount>> list = new GenericEntity<List<DTOBankAccount>>(manager.getAllAccounts(user, passwd)) {};
         return Response.ok(list).build();
         
+    }
+    
+    @POST
+    @Path("/account/{1}/val={2}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DTOBankAccount setAccountCredits(
+            @PathParam("id") int id, 
+            @PathParam("val") int val, 
+            @QueryParam("user") String user,
+            @QueryParam("passwd") String passwd) {
+        DTOBankAccount account = manager.setAccountValue(id, user, passwd, val);
+        return account;
     }
         
     /**
