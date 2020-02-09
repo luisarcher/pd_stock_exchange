@@ -22,27 +22,59 @@ public class Main {
         c.setUser("luis");
         c.setPasswd("123");
         
-<<<<<<< HEAD
-        listAllAccounts();
-        System.out.println("");
-        getAccountDetails(1000);
-        //setAccountValue(1000,10);
+        boolean isLogged = false;
+        String usernameInput = "";
+        String choice = null;
+        Scanner scan = new Scanner(System.in);
         
-        getAccountDetails(1000);
-
-=======
-        System.out.println("-------------------------------");
-        System.out.println("1 - Listagem de contas");
-        System.out.println("2 - Obter detalhes da conta");
-        System.out.println("3 - Editar saldo da conta");
-        System.out.println("0 - Sair");
-        System.out.println("-------------------------------");
+        do {
+            System.out.println("***********BANK**************");
+            System.out.println("1 - Registar");
+            System.out.println("2 - Entrar");
+            System.out.println("0 - Sair");
+            System.out.println("*****************************");
+            choice = scan.nextLine();
+            
+            switch (choice) {
+            case "1":
+                System.out.println("Introduza o seu Username: ");
+                String newUser = scan.nextLine();
+                System.out.println("Introduza a sua password: ");
+                String newPassword = scan.nextLine();
+                // TODO: Método para registar conta.
+                break;
+            case "2":
+                System.out.println("Username: ");
+                usernameInput = scan.nextLine();
+                System.out.println("Password: ");
+                String passwordInput = scan.nextLine();
+                // TODO: Método para entrar: (usernameInput, passwordInput) -> isLogged = true
+                // isLogged = true;
+                if (isLogged) {
+                    System.out.println("Bem vindo, " + usernameInput);
+                    loggedArea();
+                }   
+                break;
+            case "0":
+                System.exit(0);
+            }
+        } while (!choice.equals("0"));
         
->>>>>>> 52329a3e7396b51ae9d11415dbb38a90af8cfe99
+        c.close();
+    }
+    
+    public static void loggedArea() {
         // MENU
         String choice = null;
         Scanner scan = new Scanner(System.in);
-        do {            
+        do {       
+            System.out.println("-------------------------------");
+            System.out.println("1 - Listagem de contas");
+            System.out.println("2 - Obter detalhes da conta");
+            System.out.println("3 - Editar saldo da conta");
+            System.out.println("0 - Sair");
+            System.out.println("-------------------------------");
+            
             choice = scan.nextLine();
             switch (choice) {
             case "1":
@@ -62,10 +94,8 @@ public class Main {
                 break;
             case "0":
                 System.exit(0);
-            } // end of switch
-        } while (!choice.equals("0")); // end of loop  
-        
-        c.close();
+            }
+        } while (!choice.equals("0"));
     }
     
     public static void listAllAccounts(){
