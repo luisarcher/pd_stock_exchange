@@ -23,6 +23,7 @@ public class Main {
         c.setPasswd("123");
         
         boolean isLogged = false;
+        @SuppressWarnings("UnusedAssignment")
         String usernameInput = "";
         String choice = null;
         Scanner scan = new Scanner(System.in);
@@ -90,7 +91,7 @@ public class Main {
                 int idEdit = scan.nextInt();
                 System.out.println("Introduza o valor a adicionar: ");
                 int valEdit = scan.nextInt();
-                //editAccountValue(idEdit, valEdit); // id = 1000, valor = 10
+                setAccountValue(idEdit, valEdit); // id = 1000, valor = 10
                 break;
             case "0":
                 System.exit(0);
@@ -126,16 +127,14 @@ public class Main {
     
     public static void setAccountValue(int accNum, int val){
         String n = Integer.toString(accNum);
-        Response r = c.getAccountById(Response.class, n); 
-        
+        Response rUser = c.getAccountById(Response.class, n); 
+        Response r = c.setAccountCredits(Response.class, accNum, val);
 
-        c.setAccountCredits(Response.class, accNum, val);
         if (r.getStatus() != 200) return;
-        DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
+        if (rUser.getStatus() != 200) return;
         
+        DTOBankAccount obj = rUser.readEntity(new GenericType<DTOBankAccount>(){});
         double novoValor = obj.getBalance() + val;
         System.out.println("Saldo da conta " + accNum + " alterado para: " + novoValor);
-         
-        // FALTA O MÉTODO PARA ALTERAR DADOS NA BD!
     }
 }
