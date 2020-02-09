@@ -22,6 +22,7 @@ public class Main {
         c.setUser("luis");
         c.setPasswd("123");
         
+<<<<<<< HEAD
         listAllAccounts();
         System.out.println("");
         getAccountDetails(1000);
@@ -29,16 +30,19 @@ public class Main {
         
         getAccountDetails(1000);
 
+=======
+        System.out.println("-------------------------------");
+        System.out.println("1 - Listagem de contas");
+        System.out.println("2 - Obter detalhes da conta");
+        System.out.println("3 - Editar saldo da conta");
+        System.out.println("0 - Sair");
+        System.out.println("-------------------------------");
+        
+>>>>>>> 52329a3e7396b51ae9d11415dbb38a90af8cfe99
         // MENU
         String choice = null;
         Scanner scan = new Scanner(System.in);
-        do {
-            System.out.println(" ");
-            System.out.println("1 - Listagem de contas");
-            System.out.println("2 - Obter detalhes da conta");
-            System.out.println("3 - Editar saldo da conta");
-            System.out.println("0 - Sair");
-            
+        do {            
             choice = scan.nextLine();
             switch (choice) {
             case "1":
