@@ -83,7 +83,6 @@ public class UserAccountManager {
                 return acc;
             }
         }
-        
         return acc;
     }
    
