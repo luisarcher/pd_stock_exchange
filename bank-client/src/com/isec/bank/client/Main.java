@@ -7,6 +7,7 @@ package com.isec.bank.client;
 
 import com.isec.bank.client.ws.ClientRS;
 import com.isec.bank.dto.DTOBankAccount;
+import java.io.Console;
 import java.util.List;
 import java.util.Scanner;
 import javax.ws.rs.core.GenericType;
@@ -16,87 +17,106 @@ public class Main {
 
     static ClientRS c;
     
-    public static void main(String[] args) {
-        
-        c = new ClientRS();
-        c.setUser("luis");
-        c.setPasswd("123");
-        
-        boolean isLogged = false;
-        @SuppressWarnings("UnusedAssignment")
-        String usernameInput = "";
-        String choice = null;
+    public static void main(String[] args) {       
         Scanner scan = new Scanner(System.in);
         
-        do {
+        int opcao = 0;
+	do {
             System.out.println("***********BANK**************");
-            System.out.println("1 - Registar");
-            System.out.println("2 - Entrar");
+            System.out.println("1 - Entrar");
+            // System.out.println("2 - Registar");
             System.out.println("0 - Sair");
             System.out.println("*****************************");
-            choice = scan.nextLine();
-            
-            switch (choice) {
-            case "1":
-                System.out.println("Introduza o seu Username: ");
-                String newUser = scan.nextLine();
-                System.out.println("Introduza a sua password: ");
-                String newPassword = scan.nextLine();
-                // TODO: Método para registar conta.
+
+            opcao = scan.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+            case 1:
+                logInUser();
                 break;
-            case "2":
-                System.out.println("Username: ");
-                usernameInput = scan.nextLine();
-                System.out.println("Password: ");
-                String passwordInput = scan.nextLine();
-                // TODO: Método para entrar: (usernameInput, passwordInput) -> isLogged = true
-                // isLogged = true;
-                if (isLogged) {
-                    System.out.println("Bem vindo, " + usernameInput);
-                    loggedArea();
-                }   
-                break;
-            case "0":
+            // case 2:
+               // registerUser();
+               //  break;
+            case 0:
                 System.exit(0);
+                break;
+            default:
+                System.out.println("Opção Inválida!");
+                break;
             }
-        } while (!choice.equals("0"));
+	} while (opcao != 0);
         
         c.close();
     }
     
-    public static void loggedArea() {
-        // MENU
-        String choice = null;
+    public static void registerUser() {
         Scanner scan = new Scanner(System.in);
-        do {       
+        
+        System.out.println("Introduza o seu Username: ");
+        String newUser = scan.nextLine();
+        System.out.println("Introduza a sua password: ");
+        String newPassword = scan.nextLine();
+        // TODO: Método para registar conta.
+
+    }
+    
+    public static void logInUser() {
+        boolean isLogged = false;
+        @SuppressWarnings("UnusedAssignment")
+        String usernameInput = "";
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("Username: ");
+        usernameInput = scan.nextLine();
+        System.out.println("Password: ");
+        String passwordInput = scan.nextLine();
+        
+        c = new ClientRS();
+        c.setUser(usernameInput);   // luis
+        c.setPasswd(passwordInput); // 123
+
+        System.out.println("Bem vindo, " + usernameInput + ".");
+        loggedArea();
+    }
+    
+    public static void loggedArea() {
+        Scanner scan = new Scanner(System.in);
+        
+        int opcao = 0;
+	do {
             System.out.println("-------------------------------");
             System.out.println("1 - Listagem de contas");
             System.out.println("2 - Obter detalhes da conta");
             System.out.println("3 - Editar saldo da conta");
             System.out.println("0 - Sair");
             System.out.println("-------------------------------");
-            
-            choice = scan.nextLine();
-            switch (choice) {
-            case "1":
+
+            opcao = scan.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+            case 1:
                 listAllAccounts();
                 break;
-            case "2":
+            case 2:
                 System.out.println("Introduza o id da conta a consultar: ");
                 int idDetails = scan.nextInt();
                 getAccountDetails(idDetails);    // obter dados conta 1000
                 break;
-            case "3":
+            case 3:
                 System.out.println("Introduza o id da conta a consultar: ");
                 int idEdit = scan.nextInt();
                 System.out.println("Introduza o valor a adicionar: ");
                 int valEdit = scan.nextInt();
                 setAccountValue(idEdit, valEdit); // id = 1000, valor = 10
                 break;
-            case "0":
+            case 0:
                 System.exit(0);
+                break;
+            default:
+                System.out.println("Opção Inválida!");
+                break;
             }
-        } while (!choice.equals("0"));
+	} while (opcao != 0);
     }
     
     public static void listAllAccounts(){
@@ -114,7 +134,10 @@ public class Main {
         Response r = c.getAccountById(Response.class, n);
         // System.out.println("Status: " + r.getStatus());
                 
-        if (r.getStatus() != 200) return;
+        if (r.getStatus() != 200) {
+            System.out.println("Nao existe conta com o id indicado!");
+            return;
+        }
         
         DTOBankAccount obj = r.readEntity(new GenericType<DTOBankAccount>(){});
         System.out.println("Detalhes da conta " + accNum);
@@ -130,8 +153,10 @@ public class Main {
         Response rUser = c.getAccountById(Response.class, n); 
         Response r = c.setAccountCredits(Response.class, accNum, val);
 
-        if (r.getStatus() != 200) return;
-        if (rUser.getStatus() != 200) return;
+        if (r.getStatus() != 200 || rUser.getStatus() != 200) {
+            System.out.println("Nao foi possivel efectuar o pedido. Verifique os dados introduzidos!");
+            return;
+        }
         
         DTOBankAccount obj = rUser.readEntity(new GenericType<DTOBankAccount>(){});
         double novoValor = obj.getBalance() + val;
