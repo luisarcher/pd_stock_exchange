@@ -48,7 +48,6 @@ public class BankRS {
     
     //private DTOBankUser user;
     
-    
     /**
      * Creates a new instance of BankUserRS
      */
@@ -85,12 +84,12 @@ public class BankRS {
         
     }
     
-    @POST
-    @Path("/account/{1}/val={2}")
+    @GET
+    @Path("/balance/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public DTOBankAccount setAccountCredits(
             @PathParam("id") int id, 
-            @PathParam("val") int val, 
+            @QueryParam("val") int val, 
             @QueryParam("user") String user,
             @QueryParam("passwd") String passwd) {
         DTOBankAccount account = manager.setAccountValue(id, user, passwd, val);

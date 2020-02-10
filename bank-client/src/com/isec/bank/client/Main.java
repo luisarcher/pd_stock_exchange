@@ -153,6 +153,9 @@ public class Main {
         Response rUser = c.getAccountById(Response.class, n); 
         Response r = c.setAccountCredits(Response.class, accNum, val);
 
+        System.out.println(rUser.getStatus());
+        System.out.println(r.getStatus());
+        
         if (r.getStatus() != 200 || rUser.getStatus() != 200) {
             System.out.println("Nao foi possivel efectuar o pedido. Verifique os dados introduzidos!");
             return;

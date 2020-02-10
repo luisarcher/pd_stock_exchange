@@ -57,4 +57,12 @@ public class TAccountFacade extends AbstractFacade<TAccount> {
         return list;
     }
     
+    public void setAccountValue(int id, int val){
+        
+        TAccount targetAcc = this.find(id);
+        targetAcc.setBalance(targetAcc.getBalance() + val);
+        this.edit(targetAcc);
+        
+    }
+    
 }

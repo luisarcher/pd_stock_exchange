@@ -72,18 +72,25 @@ public class UserAccountManager {
     }
     
     public DTOBankAccount setAccountValue(int id, String user, String passwd, int val){
-
-        TUser auth = tUserFacade.getUserByCredentials(user,passwd);
-
-        DTOBankAccount acc = ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
-        if (acc != null){
-            // If this account belongs to the user, he is able to read it.
-            if (auth.getIdUser().equals(acc.getIdUser())){
-                acc.setBalance(acc.getBalance()+val);
-                return acc;
+        DTOBankAccount acc = null;
+        if (this.tAdminFacade.isAdmin(user, passwd)){
+            return ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+        } else {
+            TUser auth = tUserFacade.getUserByCredentials(user,passwd);
+            if (auth == null){
+                return null;
+            } else {
+                // Gets account by id
+                acc = ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+                if (acc != null){
+                    if (auth.getIdUser().equals(acc.getIdUser())){
+                        tAccountFacade.setAccountValue(id, val);
+                        // refresh data
+                        acc = ConverterTAccount.mapEntityToDTO(this.tAccountFacade.getAccountById(id));
+                    }
+                }
             }
         }
-        
         return acc;
     }
    
