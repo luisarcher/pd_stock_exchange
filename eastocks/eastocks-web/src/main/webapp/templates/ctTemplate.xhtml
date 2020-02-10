@@ -53,18 +53,12 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                Footer...
+                <ui:insert name="ct_footer"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="175" header="Menus" collapsible="true" rendered="#{ctUserController.loggedInUser != null}">
                 <p:menu >
                     <p:menuitem value="Portofolio" outcome="/pages/portofolio.xhtml" />
-                    <p:menuitem value="Personal Area" outcome="/pages/personalArea.xhtml" />
-                    <p:menuitem value="Link an Account" outcome="/pages/linkAccount.xhtml" />
-                    
-                </p:menu>
-                <p:menu >
-                    <p:menuitem value="opcção 4" outcome="/pages/portofolio.xhtml" />
                     <p:menuitem value="Personal Area" outcome="/pages/personalArea.xhtml" />
                     <p:menuitem value="Link an Account" outcome="/pages/linkAccount.xhtml" />
                     

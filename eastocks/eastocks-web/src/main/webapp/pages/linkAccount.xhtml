@@ -8,9 +8,57 @@
       xmlns:ct="http://java.sun.com/jsf/composite/components">
     
 
-    <ui:composition id="cmpIndex" template="/templates/ctLoggedArea.xhtml">
-        <ui:define name="ct_content">
-            <h2>Link an Account..</h2>
+    <ui:composition id="cmpIndex" template="/templates/ctTemplate.xhtml">
+        <ui:define name="ct_content">            
+            <div class="ui-g-3">
+                <h2>Link an Account..</h2>
+                <h:form>
+                        <h4>Username</h4>
+                        <p:inputTextarea rows="1" cols="15" maxlength="10" autoResize="false" />
+                        <br />
+                        <h:outputText id="inpt1" />
+
+                        <h4>Password</h4>
+                        <p:inputTextarea rows="1" cols="15" maxlength="10" autoResize="false" />
+                        <br />
+                        <h:outputText id="inpt2" />
+                    <div class="ui-g-6">
+                        <p:commandButton
+                            id="btn1"
+                            value="Consultar contas"
+                            oncomplete="PF('TUserCreateDialog').show()"
+                        />
+                    </div>
+                </h:form>
+            </div>
+            <div class="ui-g-9">
+                <p>Contas associadas ao utilizador:</p>
+                <p:dataTable var="car" value="#{ctStocksController.itemsCompany}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{car.id}" />
+                    </p:column>
+
+                    <p:column headerText="Balance">
+                        <h:outputText value="#{car.year}" />
+                    </p:column>
+
+                    <p:column headerText="Created_at">
+                        <h:outputText value="#{car.brand}" />
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <h:outputText value="#{car.color}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+            
+            
         </ui:define>
+        <ui:define name="ct_footer">
+            <h2>Link an Account Footer</h2>
+        </ui:define>
+        
+        
+        
     </ui:composition>
 </html>
